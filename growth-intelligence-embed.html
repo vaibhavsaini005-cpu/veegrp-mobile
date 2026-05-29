@@ -1,0 +1,659 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5" />
+<title>Growth Intelligence Suite | Vee Group</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;1,6..96,500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+/* ============================================================
+   VEE GROUP — Brand system (vee.css inlined)
+   ============================================================ */
+:root{
+  --navy:        #16294F;
+  --navy-deep:   #0E1C3A;
+  --navy-soft:   #2C3F66;
+  --cream:       #FBF3E2;
+  --cream-deep:  #F2E6CC;
+  --cream-card:  #FFFAF0;
+  --putty:       #ECE8D4;
+  --line:        #16294F22;
+  --line-on-navy:#FBF3E233;
+
+  --display: "Bodoni Moda", "Didot", "Times New Roman", serif;
+  --body:    "Cormorant Garamond", "Georgia", serif;
+  --ui:      "Jost", -apple-system, system-ui, sans-serif;
+  --num:     "Space Grotesk", "Jost", ui-sans-serif, sans-serif;
+
+  --pad: 26px;
+  --maxw: 460px;
+  --ease: cubic-bezier(.22,.61,.36,1);
+}
+
+*{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html,body{ margin:0; padding:0; }
+html{ scroll-behavior:smooth; }
+body{
+  background:var(--navy);
+  color:var(--navy);
+  font-family:var(--body);
+  font-size:18px;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+img{ max-width:100%; display:block; }
+a{ color:inherit; text-decoration:none; }
+
+/* Phone column */
+.app{
+  max-width:var(--maxw);
+  margin:0 auto;
+  min-height:100vh;
+  background:var(--cream);
+  position:relative;
+  overflow-x:clip;
+  box-shadow:0 0 80px #00000040;
+}
+
+/* Type helpers */
+.eyebrow{
+  font-family:var(--ui);
+  font-size:11px;
+  font-weight:500;
+  letter-spacing:.32em;
+  text-transform:uppercase;
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  color:var(--navy);
+  opacity:.75;
+}
+.eyebrow::before{
+  content:"";
+  width:24px; height:1px;
+  background:currentColor;
+  display:inline-block;
+}
+h1,h2,h3,h4{ font-family:var(--display); font-weight:500; margin:0; letter-spacing:-.01em; }
+.display{
+  font-family:var(--display);
+  font-weight:500;
+  line-height:1.04;
+  letter-spacing:-.015em;
+}
+p{ margin:0 0 1em; }
+.lead{ font-size:21px; line-height:1.45; }
+
+/* Top bar */
+.topbar{
+  position:sticky; top:0; z-index:60;
+  display:flex; align-items:center; justify-content:space-between;
+  height:62px; padding:0 var(--pad);
+  background:color-mix(in oklab, var(--cream) 86%, transparent);
+  backdrop-filter:saturate(140%) blur(12px);
+  -webkit-backdrop-filter:saturate(140%) blur(12px);
+  border-bottom:1px solid var(--line);
+  transition:background .3s;
+}
+.topbar .wordmark{
+  font-family:var(--display);
+  font-weight:600;
+  font-size:19px;
+  letter-spacing:.05em;
+  color:var(--navy);
+  white-space:nowrap;
+}
+.menu-btn{
+  border:none; background:none; padding:8px; margin:-8px -8px -8px 0;
+  display:flex; flex-direction:column; gap:5px; cursor:pointer;
+}
+.menu-btn span{ width:24px; height:1.6px; background:var(--navy); display:block; transition:.3s var(--ease); }
+
+/* Slide-in menu */
+.nav-overlay{
+  position:fixed; inset:0; z-index:80;
+  background:#0E1C3A00; pointer-events:none;
+  transition:background .4s;
+}
+.nav-overlay.open{ background:#0E1C3A55; pointer-events:auto; }
+.nav-panel{
+  position:fixed; top:0; right:0; z-index:90;
+  width:min(86vw,400px); height:100%;
+  background:var(--navy);
+  color:var(--cream);
+  transform:translateX(100%);
+  transition:transform .46s var(--ease);
+  display:flex; flex-direction:column;
+  padding:26px var(--pad) 32px;
+  overflow-y:auto;
+}
+.nav-panel.open{ transform:translateX(0); }
+.nav-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom:34px; }
+.nav-head .wordmark{ font-family:var(--display); font-weight:600; font-size:20px; letter-spacing:.04em; color:var(--cream); }
+.nav-close{ border:none; background:none; color:var(--cream); font-family:var(--ui); font-size:11px; letter-spacing:.2em; text-transform:uppercase; cursor:pointer; padding:6px; }
+.nav-links{ display:flex; flex-direction:column; }
+.nav-links a{
+  font-family:var(--display);
+  font-size:30px; font-weight:500;
+  color:var(--cream);
+  padding:13px 0;
+  border-bottom:1px solid var(--line-on-navy);
+  display:flex; align-items:baseline; justify-content:space-between;
+  opacity:0; transform:translateY(12px);
+}
+.nav-panel.open .nav-links a{ animation:navIn .5s var(--ease) forwards; }
+.nav-links a .idx{ font-family:var(--ui); font-size:11px; letter-spacing:.15em; opacity:.5; }
+.nav-links a[aria-current="page"]{ color:var(--putty); font-style:italic; }
+@keyframes navIn{ to{ opacity:1; transform:none; } }
+.nav-foot{ margin-top:auto; padding-top:28px; }
+.nav-foot .socials{ display:flex; gap:18px; margin-bottom:16px; }
+.nav-foot .socials a{ font-family:var(--ui); font-size:11px; letter-spacing:.15em; text-transform:uppercase; opacity:.7; }
+.nav-foot .contact{ font-family:var(--ui); font-size:12px; letter-spacing:.04em; opacity:.6; line-height:1.9; }
+
+/* Buttons */
+.btn{
+  font-family:var(--ui);
+  font-size:12px; font-weight:500;
+  letter-spacing:.18em; text-transform:uppercase;
+  display:inline-flex; align-items:center; gap:10px;
+  padding:15px 26px;
+  cursor:pointer; border:none;
+  transition:.25s var(--ease);
+}
+.btn-solid{ background:var(--navy); color:var(--cream); }
+.btn-solid:hover{ background:var(--navy-deep); }
+.btn-ghost{ background:transparent; color:var(--navy); border:1px solid var(--navy); }
+.btn-ghost.on-navy{ color:var(--cream); border-color:var(--line-on-navy); }
+.btn-solid.on-navy{ background:var(--cream); color:var(--navy); }
+.btn .arr{ transition:transform .25s var(--ease); }
+.btn:hover .arr{ transform:translateX(4px); }
+.link-arrow{
+  font-family:var(--ui); font-size:12px; font-weight:500;
+  letter-spacing:.16em; text-transform:uppercase;
+  display:inline-flex; align-items:center; gap:9px;
+  padding-bottom:3px; border-bottom:1px solid currentColor;
+}
+.link-arrow .arr{ transition:transform .25s var(--ease); }
+.link-arrow:hover .arr{ transform:translateX(4px); }
+
+/* Sections */
+section{ padding:64px var(--pad); position:relative; }
+.sec-navy{ background:var(--navy); color:var(--cream); }
+.sec-navy .eyebrow{ color:var(--cream); opacity:.7; }
+.sec-cream-deep{ background:var(--cream-deep); }
+.block{ padding:64px var(--pad); }
+.divider{ height:1px; background:var(--line); margin:0 var(--pad); }
+
+/* Reveal animations */
+.reveal{ opacity:0; transform:translateY(26px); transition:opacity .9s var(--ease), transform .9s var(--ease); }
+.reveal.in{ opacity:1; transform:none; }
+.reveal.d1{ transition-delay:.08s; }
+.reveal.d2{ transition-delay:.16s; }
+.reveal.d3{ transition-delay:.24s; }
+
+/* Footer */
+.site-foot{ background:var(--navy-deep); color:var(--cream); padding:52px var(--pad) 120px; }
+.site-foot .fmark{ font-family:var(--display); font-weight:600; font-size:30px; letter-spacing:.04em; margin-bottom:6px; }
+.site-foot .ftag{ font-family:var(--body); font-style:italic; font-size:19px; opacity:.8; margin-bottom:30px; }
+.site-foot .fnav{ display:grid; grid-template-columns:1fr 1fr; gap:11px 16px; margin-bottom:30px; }
+.site-foot .fnav a{ font-family:var(--ui); font-size:12px; letter-spacing:.12em; text-transform:uppercase; opacity:.75; }
+.site-foot .fline{ height:1px; background:var(--line-on-navy); margin:8px 0 22px; }
+.site-foot .fcontact{ font-family:var(--ui); font-size:12px; letter-spacing:.05em; line-height:2; opacity:.7; }
+.site-foot .fsoc{ display:flex; gap:16px; margin-top:18px; }
+.site-foot .fsoc a{ font-family:var(--ui); font-size:11px; letter-spacing:.14em; text-transform:uppercase; opacity:.7; }
+.site-foot .fcopy{ font-family:var(--ui); font-size:10px; letter-spacing:.1em; text-transform:uppercase; opacity:.4; margin-top:26px; }
+
+/* Sticky CTA bar */
+.cta-bar{
+  position:fixed; left:50%; bottom:0; transform:translateX(-50%);
+  width:100%; max-width:var(--maxw); z-index:55;
+  display:flex; gap:1px;
+  background:var(--line-on-navy);
+  transition:transform .4s var(--ease);
+}
+.cta-bar.hidden{ transform:translate(-50%,110%); }
+.cta-bar a{
+  flex:1; text-align:center;
+  font-family:var(--ui); font-size:11px; font-weight:500;
+  letter-spacing:.16em; text-transform:uppercase;
+  padding:16px 8px;
+  background:var(--navy); color:var(--cream);
+}
+.cta-bar a.alt{ background:var(--cream); color:var(--navy); }
+
+/* ============================================================
+   Growth Intelligence Suite — page styles
+   ============================================================ */
+.stat .n, .ctrl .lab .v, .readout .hero-num, .readout .rrow .rv{
+  font-family:var(--num); font-variant-numeric:tabular-nums; letter-spacing:-.01em;
+}
+
+.page-hero{ padding:50px var(--pad) 44px; background:var(--navy); color:var(--cream); }
+.page-hero .eyebrow{ color:var(--cream); opacity:.7; }
+.page-hero .big{ font-size:46px; line-height:1.03; margin:18px 0 22px; }
+.page-hero .lead{ max-width:32ch; opacity:.88; }
+
+.modules{ padding:54px var(--pad); }
+.modules h2{ font-size:30px; line-height:1.1; margin:8px 0 28px; }
+.module{ padding:24px 0; border-top:1px solid var(--line); display:flex; gap:18px; }
+.module:last-child{ border-bottom:1px solid var(--line); }
+.module .mn{ font-family:var(--display); font-size:30px; line-height:1; opacity:.5; min-width:44px; }
+.module h3{ font-size:23px; margin:0 0 7px; }
+.module p{ font-size:16px; line-height:1.45; margin:0; opacity:.85; }
+
+.stats{ display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line-on-navy); color:var(--cream); }
+.stat{ background:var(--navy); padding:30px 22px; }
+.stat .n{ font-weight:500; font-size:42px; line-height:1; }
+.stat .l{ font-family:var(--ui); font-size:11px; letter-spacing:.14em; text-transform:uppercase; opacity:.7; margin-top:10px; }
+
+/* ---- Calculator ---- */
+.calc{ padding:54px var(--pad); }
+.calc > h2{ font-size:30px; line-height:1.1; margin:8px 0 6px; }
+.calc > .sub{ font-size:16px; opacity:.8; margin:0 0 22px; max-width:34ch; }
+.calc-tabs{ display:flex; gap:1px; background:var(--line); border:1px solid var(--navy); margin-bottom:22px; }
+.calc-tab{ flex:1; border:none; background:var(--cream); color:var(--navy);
+  font-family:var(--ui); font-size:10px; font-weight:500; letter-spacing:.1em; text-transform:uppercase;
+  padding:12px 4px; cursor:pointer; transition:.2s var(--ease); }
+.calc-tab.on{ background:var(--navy); color:var(--cream); }
+.calc-panel{ display:none; }
+.calc-panel.on{ display:block; animation:cfade .35s var(--ease); }
+@keyframes cfade{ from{opacity:0;transform:translateY(8px);} to{opacity:1;transform:none;} }
+
+.ctrl{ margin-bottom:20px; }
+.ctrl .lab{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:9px; }
+.ctrl .lab .t{ font-family:var(--ui); font-size:12px; letter-spacing:.08em; text-transform:uppercase; opacity:.8; }
+.ctrl .lab .v{ font-weight:500; font-size:18px; color:var(--navy); }
+.ctrl input[type=range]{ -webkit-appearance:none; appearance:none; width:100%; height:2px; background:var(--navy); opacity:.5; margin:0; cursor:pointer; }
+.ctrl input[type=range]::-webkit-slider-thumb{ -webkit-appearance:none; appearance:none; width:22px; height:22px; border-radius:50%; background:var(--navy); border:3px solid var(--cream); box-shadow:0 0 0 1px var(--navy); }
+.ctrl input[type=range]::-moz-range-thumb{ width:22px; height:22px; border:3px solid var(--cream); border-radius:50%; background:var(--navy); box-shadow:0 0 0 1px var(--navy); }
+
+.seg{ display:flex; gap:1px; background:var(--line); border:1px solid var(--line); margin-top:6px; }
+.seg button{ flex:1; border:none; background:var(--cream-card); color:var(--navy); font-family:var(--ui); font-size:12px; letter-spacing:.04em; padding:11px 4px; cursor:pointer; }
+.seg button.on{ background:var(--navy); color:var(--cream); }
+
+.readout{ background:var(--navy); color:var(--cream); padding:26px 24px; margin-top:8px; }
+.readout .rrow{ display:flex; justify-content:space-between; align-items:baseline; padding:11px 0; border-bottom:1px solid var(--line-on-navy); }
+.readout .rrow:last-child{ border-bottom:none; }
+.readout .rrow .rk{ font-family:var(--ui); font-size:11px; letter-spacing:.12em; text-transform:uppercase; opacity:.7; }
+.readout .rrow .rv{ font-weight:500; font-size:22px; }
+.readout .hero-num{ font-weight:600; font-size:44px; line-height:1; margin:2px 0 4px; }
+.readout .hero-lab{ font-family:var(--ui); font-size:11px; letter-spacing:.14em; text-transform:uppercase; opacity:.7; }
+.verdict{ font-family:var(--body); font-style:italic; font-size:18px; line-height:1.35; margin-top:14px; opacity:.92; }
+.calc-note{ font-family:var(--ui); font-size:11px; letter-spacing:.04em; opacity:.55; margin-top:14px; line-height:1.7; }
+
+.quiz-q{ padding:16px 0; border-top:1px solid var(--line); }
+.quiz-q:first-child{ border-top:none; }
+.quiz-q .qt{ font-family:var(--body); font-size:17px; line-height:1.35; margin-bottom:10px; }
+
+.closer{ padding:64px var(--pad); }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- Top bar -->
+  <header class="topbar">
+    <a href="https://www.veegrp.com" class="wordmark">VEE GROUP</a>
+    <button class="menu-btn" aria-label="Open menu"><span></span><span></span><span></span></button>
+  </header>
+  <div class="nav-overlay"></div>
+  <nav class="nav-panel" aria-label="Main">
+    <div class="nav-head">
+      <span class="wordmark">VEE GROUP</span>
+      <button class="nav-close">Close ✕</button>
+    </div>
+    <div class="nav-links">
+      <a href="https://www.veegrp.com">Home <span class="idx">01</span></a>
+      <a href="https://www.veegrp.com/about">About us <span class="idx">02</span></a>
+      <a href="https://www.veegrp.com/services">Services <span class="idx">03</span></a>
+      <a href="https://www.veegrp.com/growth-intelligence-suite" aria-current="page">Growth Intelligence <span class="idx">04</span></a>
+      <a href="https://www.veegrp.com/fellowship">Fellowship <span class="idx">05</span></a>
+      <a href="https://www.veegrp.com/insights">Insights <span class="idx">06</span></a>
+      <a href="https://www.veegrp.com/contact">Contact <span class="idx">07</span></a>
+    </div>
+    <div class="nav-foot">
+      <div class="socials">
+        <a href="https://www.linkedin.com/company/veegroup/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://www.instagram.com/veegrp/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://x.com/VeeGrp" target="_blank" rel="noopener">X</a>
+      </div>
+      <div class="contact">info@veegroup.in · +91 85959 99212<br />New Delhi · United Kingdom</div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="page-hero">
+    <span class="eyebrow">Growth Intelligence Suite</span>
+    <h1 class="display big">A diagnostic-led intelligence layer.</h1>
+    <p class="lead">For founder-led businesses that want to make growth decisions with evidence — not instinct. We track the signals that move markets so you can act before your competitors notice.</p>
+  </section>
+
+  <!-- Stats grid -->
+  <div class="stats">
+    <div class="stat"><div class="n">90</div><div class="l">Days to first signal report</div></div>
+    <div class="stat"><div class="n">3</div><div class="l">Lenses: market, brand, rival</div></div>
+    <div class="stat"><div class="n">1</div><div class="l">Unified growth dashboard</div></div>
+    <div class="stat"><div class="n">∞</div><div class="l">Continuous monitoring</div></div>
+  </div>
+
+  <!-- Modules -->
+  <section class="modules">
+    <span class="eyebrow reveal">What It Tracks</span>
+    <h2 class="display reveal d1">Three lenses on the decisions that matter.</h2>
+    <div class="module reveal">
+      <span class="mn">01</span>
+      <div><h3>Market Signals</h3><p>Demand shifts, category movement and emerging behaviour — surfaced early, read through a behavioural lens.</p></div>
+    </div>
+    <div class="module reveal d1">
+      <span class="mn">02</span>
+      <div><h3>Brand Perception</h3><p>How your market actually perceives you versus how you intend to be seen — the gap is where growth is won or lost.</p></div>
+    </div>
+    <div class="module reveal d2">
+      <span class="mn">03</span>
+      <div><h3>Competitive Positioning</h3><p>Where you sit in the consideration set, and the precise moves that shift it in your favour.</p></div>
+    </div>
+  </section>
+
+  <!-- Calculators -->
+  <section class="calc sec-cream-deep">
+    <span class="eyebrow reveal">Model It Yourself</span>
+    <h2 class="display reveal d1">Growth calculators.</h2>
+    <p class="sub reveal d1">A taste of the maths behind the Suite. Move the sliders — every number updates live.</p>
+
+    <div class="calc-tabs reveal d1">
+      <button class="calc-tab on" data-tab="proj">Growth</button>
+      <button class="calc-tab" data-tab="roi">ROI</button>
+      <button class="calc-tab" data-tab="unit">Unit Econ</button>
+      <button class="calc-tab" data-tab="ready">Readiness</button>
+    </div>
+
+    <!-- 1. Growth projection -->
+    <div class="calc-panel on" data-panel="proj">
+      <div class="ctrl">
+        <div class="lab"><span class="t">Current monthly revenue</span><span class="v" id="p_rev">₹10,00,000</span></div>
+        <input type="range" id="i_rev" min="100000" max="50000000" step="100000" value="1000000" />
+      </div>
+      <div class="ctrl">
+        <div class="lab"><span class="t">Monthly growth rate</span><span class="v" id="p_g">8%</span></div>
+        <input type="range" id="i_g" min="0" max="30" step="0.5" value="8" />
+      </div>
+      <div class="ctrl">
+        <div class="lab"><span class="t">Horizon</span><span class="v" id="p_m">12 months</span></div>
+        <input type="range" id="i_m" min="3" max="36" step="1" value="12" />
+      </div>
+      <div class="readout">
+        <div class="hero-lab">Projected monthly revenue</div>
+        <div class="hero-num" id="o_end">₹0</div>
+        <div class="rrow"><span class="rk">Cumulative over period</span><span class="rv" id="o_cum">₹0</span></div>
+        <div class="rrow"><span class="rk">Multiple of today</span><span class="rv" id="o_mult">0×</span></div>
+      </div>
+      <p class="calc-note">Compounding model: revenue × (1 + rate)<sup>months</sup>. Illustrative only.</p>
+    </div>
+
+    <!-- 2. ROI / ROAS -->
+    <div class="calc-panel" data-panel="roi">
+      <div class="ctrl">
+        <div class="lab"><span class="t">Monthly investment</span><span class="v" id="p_spend">₹5,00,000</span></div>
+        <input type="range" id="i_spend" min="50000" max="10000000" step="50000" value="500000" />
+      </div>
+      <div class="ctrl">
+        <div class="lab"><span class="t">Revenue returned</span><span class="v" id="p_ret">₹15,00,000</span></div>
+        <input type="range" id="i_ret" min="0" max="40000000" step="50000" value="1500000" />
+      </div>
+      <div class="readout">
+        <div class="hero-lab">Return on ad spend</div>
+        <div class="hero-num" id="o_roas">0×</div>
+        <div class="rrow"><span class="rk">Net return</span><span class="rv" id="o_net">₹0</span></div>
+        <div class="rrow"><span class="rk">ROI</span><span class="rv" id="o_roi">0%</span></div>
+      </div>
+      <p class="calc-note">ROAS = revenue ÷ spend. ROI = (revenue − spend) ÷ spend.</p>
+    </div>
+
+    <!-- 3. Unit economics -->
+    <div class="calc-panel" data-panel="unit">
+      <div class="ctrl">
+        <div class="lab"><span class="t">Cost to acquire a customer (CAC)</span><span class="v" id="p_cac">₹5,000</span></div>
+        <input type="range" id="i_cac" min="200" max="100000" step="200" value="5000" />
+      </div>
+      <div class="ctrl">
+        <div class="lab"><span class="t">Avg revenue / customer / month</span><span class="v" id="p_arpu">₹1,500</span></div>
+        <input type="range" id="i_arpu" min="100" max="50000" step="100" value="1500" />
+      </div>
+      <div class="ctrl">
+        <div class="lab"><span class="t">Gross margin</span><span class="v" id="p_margin">70%</span></div>
+        <input type="range" id="i_margin" min="10" max="95" step="1" value="70" />
+      </div>
+      <div class="ctrl">
+        <div class="lab"><span class="t">Avg customer lifetime</span><span class="v" id="p_life">24 months</span></div>
+        <input type="range" id="i_life" min="1" max="60" step="1" value="24" />
+      </div>
+      <div class="readout">
+        <div class="hero-lab">LTV : CAC ratio</div>
+        <div class="hero-num" id="o_ratio">0×</div>
+        <div class="rrow"><span class="rk">Lifetime value (LTV)</span><span class="rv" id="o_ltv">₹0</span></div>
+        <div class="rrow"><span class="rk">CAC payback</span><span class="rv" id="o_pay">0 mo</span></div>
+        <div class="verdict" id="o_unit_v">—</div>
+      </div>
+      <p class="calc-note">LTV = ARPU × margin × lifetime. Healthy SaaS benchmark is LTV:CAC ≥ 3× and payback ≤ 12 months.</p>
+    </div>
+
+    <!-- 4. Growth readiness quiz -->
+    <div class="calc-panel" data-panel="ready">
+      <div id="quiz"></div>
+      <div class="readout" style="margin-top:18px;">
+        <div class="hero-lab">Growth readiness</div>
+        <div class="hero-num" id="o_score">0<span style="font-size:22px;opacity:.6;">/100</span></div>
+        <div class="verdict" id="o_score_v">Answer the questions to see your score.</div>
+      </div>
+      <p class="calc-note">A directional self-assessment — the full diagnostic goes far deeper.</p>
+    </div>
+
+    <p style="margin-top:26px;" class="reveal">
+      <a href="https://www.veegrp.com/contact" class="link-arrow">Get the real numbers <span class="arr">→</span></a>
+    </p>
+  </section>
+
+  <!-- How it works -->
+  <section class="block">
+    <span class="eyebrow reveal">How It Works</span>
+    <h2 class="display reveal d1" style="font-size:30px;line-height:1.1;margin:10px 0 16px;">Intelligence becomes a system, not a one-off report.</h2>
+    <p class="reveal d1" style="font-size:18px;line-height:1.5;">We instrument the inputs, interpret them through behavioural science, and translate findings into the specific decisions in front of you — pricing, positioning, messaging, and where to spend next.</p>
+    <p class="reveal d2"><a href="https://www.veegrp.com/contact" class="link-arrow">Request access <span class="arr">→</span></a></p>
+  </section>
+
+  <!-- Closer / CTA -->
+  <section class="closer sec-navy">
+    <span class="eyebrow reveal">Built In</span>
+    <h2 class="display reveal d1" style="font-size:34px;line-height:1.1;margin:14px 0 26px;">The Suite is included in every long-term engagement.</h2>
+    <a href="https://www.veegrp.com/contact" class="btn btn-solid on-navy reveal d1">Start a Project <span class="arr">→</span></a>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-foot">
+    <div class="fmark">VEE GROUP</div>
+    <div class="ftag">Built on human behaviour.</div>
+    <div class="fnav">
+      <a href="https://www.veegrp.com/about">About us</a>
+      <a href="https://www.veegrp.com/services">Services</a>
+      <a href="https://www.veegrp.com/growth-intelligence-suite">Growth Intelligence</a>
+      <a href="https://www.veegrp.com/fellowship">Fellowship</a>
+      <a href="https://www.veegrp.com/insights">Insights</a>
+      <a href="https://www.veegrp.com/contact">Contact</a>
+    </div>
+    <div class="fline"></div>
+    <div class="fcontact">info@veegroup.in<br />+91 85959 99212<br />New Delhi, India · United Kingdom</div>
+    <div class="fsoc">
+      <a href="https://www.linkedin.com/company/veegroup/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://www.instagram.com/veegrp/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://x.com/VeeGrp" target="_blank" rel="noopener">X</a>
+    </div>
+    <div class="fcopy">© 2026 Vee Group · New Delhi · United Kingdom</div>
+  </footer>
+
+  <!-- Sticky bottom CTA -->
+  <div class="cta-bar">
+    <a href="https://www.veegrp.com/contact">Start a Project</a>
+    <a class="alt" href="https://wa.me/919212079212" target="_blank" rel="noopener">WhatsApp</a>
+  </div>
+</div>
+
+<script>
+/* VEE GROUP — shared interactions (vee.js inlined) */
+(function(){
+  // Slide-in menu
+  function bindMenu(){
+    var btn = document.querySelector('.menu-btn');
+    var panel = document.querySelector('.nav-panel');
+    var overlay = document.querySelector('.nav-overlay');
+    var close = document.querySelector('.nav-close');
+    if(!btn||!panel) return;
+    var links = panel.querySelectorAll('.nav-links a');
+    function open(){
+      panel.classList.add('open'); overlay.classList.add('open');
+      document.body.style.overflow='hidden';
+      links.forEach(function(l,i){ l.style.animationDelay=(0.06*i+0.08)+'s'; });
+    }
+    function shut(){
+      panel.classList.remove('open'); overlay.classList.remove('open');
+      document.body.style.overflow='';
+    }
+    btn.addEventListener('click',open);
+    if(close) close.addEventListener('click',shut);
+    if(overlay) overlay.addEventListener('click',shut);
+  }
+
+  // Scroll reveals
+  function bindReveal(){
+    var els = document.querySelectorAll('.reveal');
+    if(!('IntersectionObserver' in window)){ els.forEach(function(e){e.classList.add('in');}); return; }
+    var io = new IntersectionObserver(function(ents){
+      ents.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target);} });
+    },{threshold:.14, rootMargin:'0px 0px -8% 0px'});
+    els.forEach(function(e){ io.observe(e); });
+  }
+
+  // Sticky CTA hide on footer
+  function bindCta(){
+    var bar = document.querySelector('.cta-bar');
+    var foot = document.querySelector('.site-foot');
+    if(!bar||!foot) return;
+    var io = new IntersectionObserver(function(ents){
+      ents.forEach(function(en){ bar.classList.toggle('hidden', en.isIntersecting); });
+    },{threshold:.05});
+    io.observe(foot);
+  }
+
+  function init(){ bindMenu(); bindReveal(); bindCta(); }
+  if(document.readyState!=='loading') init();
+  else document.addEventListener('DOMContentLoaded', init);
+})();
+
+/* Calculator logic */
+(function(){
+  var IN = function(n){ return '₹' + Math.round(n).toLocaleString('en-IN'); };
+
+  // Tab switching
+  document.querySelectorAll('.calc-tab').forEach(function(t){
+    t.addEventListener('click',function(){
+      var id = t.getAttribute('data-tab');
+      document.querySelectorAll('.calc-tab').forEach(function(x){ x.classList.toggle('on', x===t); });
+      document.querySelectorAll('.calc-panel').forEach(function(p){ p.classList.toggle('on', p.getAttribute('data-panel')===id); });
+    });
+  });
+
+  function bind(id,fn){ var e=document.getElementById(id); if(e) e.addEventListener('input',fn); }
+
+  // 1. Growth projection
+  function proj(){
+    var rev=+document.getElementById('i_rev').value,
+        g=+document.getElementById('i_g').value/100,
+        m=+document.getElementById('i_m').value;
+    document.getElementById('p_rev').textContent=IN(rev);
+    document.getElementById('p_g').textContent=(+document.getElementById('i_g').value)+'%';
+    document.getElementById('p_m').textContent=m+' months';
+    var end=rev*Math.pow(1+g,m);
+    var cum=g===0?rev*m:rev*(Math.pow(1+g,m+1)-1)/g - rev;
+    document.getElementById('o_end').textContent=IN(end);
+    document.getElementById('o_cum').textContent=IN(cum);
+    document.getElementById('o_mult').textContent=(end/rev).toFixed(1)+'×';
+  }
+  ['i_rev','i_g','i_m'].forEach(function(i){ bind(i,proj); }); proj();
+
+  // 2. ROI / ROAS
+  function roi(){
+    var s=+document.getElementById('i_spend').value,
+        r=+document.getElementById('i_ret').value;
+    document.getElementById('p_spend').textContent=IN(s);
+    document.getElementById('p_ret').textContent=IN(r);
+    document.getElementById('o_roas').textContent=(s? (r/s):0).toFixed(2)+'×';
+    document.getElementById('o_net').textContent=IN(r-s);
+    document.getElementById('o_roi').textContent=(s? Math.round((r-s)/s*100):0)+'%';
+  }
+  ['i_spend','i_ret'].forEach(function(i){ bind(i,roi); }); roi();
+
+  // 3. Unit economics
+  function unit(){
+    var cac=+document.getElementById('i_cac').value,
+        arpu=+document.getElementById('i_arpu').value,
+        mg=+document.getElementById('i_margin').value/100,
+        life=+document.getElementById('i_life').value;
+    document.getElementById('p_cac').textContent=IN(cac);
+    document.getElementById('p_arpu').textContent=IN(arpu);
+    document.getElementById('p_margin').textContent=(+document.getElementById('i_margin').value)+'%';
+    document.getElementById('p_life').textContent=life+' months';
+    var ltv=arpu*mg*life, ratio=cac? ltv/cac:0, pay=(arpu*mg)? cac/(arpu*mg):0;
+    document.getElementById('o_ltv').textContent=IN(ltv);
+    document.getElementById('o_ratio').textContent=ratio.toFixed(1)+'×';
+    document.getElementById('o_pay').textContent=pay.toFixed(1)+' mo';
+    var v=document.getElementById('o_unit_v');
+    if(ratio>=3 && pay<=12) v.textContent='Strong unit economics — scale with confidence.';
+    else if(ratio>=1.5) v.textContent='Workable, but there\'s room to tighten CAC or lift retention.';
+    else v.textContent='Fragile — each customer costs more than they return. Fix before scaling spend.';
+  }
+  ['i_cac','i_arpu','i_margin','i_life'].forEach(function(i){ bind(i,unit); }); unit();
+
+  // 4. Growth readiness quiz
+  var QS=[
+    'We have a clearly articulated market position.',
+    'We can measure revenue back to specific activities.',
+    'Our brand looks consistent everywhere it appears.',
+    'Growth today does not depend on the founder personally.',
+    'We make growth decisions from data, not instinct.'
+  ];
+  var ans=QS.map(function(){ return null; });
+  var quiz=document.getElementById('quiz');
+  if(quiz){
+    QS.forEach(function(q,i){
+      var d=document.createElement('div'); d.className='quiz-q';
+      d.innerHTML='<div class="qt">'+q+'</div><div class="seg" data-q="'+i+'">'+
+        '<button data-val="0">No</button><button data-val="1">Somewhat</button><button data-val="2">Yes</button></div>';
+      quiz.appendChild(d);
+    });
+    quiz.querySelectorAll('.seg').forEach(function(seg){
+      var qi=+seg.getAttribute('data-q');
+      seg.querySelectorAll('button').forEach(function(b){
+        b.addEventListener('click',function(){
+          seg.querySelectorAll('button').forEach(function(x){ x.classList.toggle('on',x===b); });
+          ans[qi]=+b.getAttribute('data-val'); score();
+        });
+      });
+    });
+  }
+  function score(){
+    var answered=ans.filter(function(a){ return a!==null; }).length;
+    var pts=ans.reduce(function(s,a){ return s+(a||0); },0);
+    var sc=Math.round(pts/(QS.length*2)*100);
+    document.getElementById('o_score').innerHTML=sc+'<span style="font-size:22px;opacity:.6;">/100</span>';
+    var v=document.getElementById('o_score_v');
+    if(answered<QS.length) v.textContent='Answer all '+QS.length+' to lock your score — '+answered+'/'+QS.length+' done.';
+    else if(sc>=80) v.textContent='Engineered to grow. The Suite sharpens an already strong base.';
+    else if(sc>=50) v.textContent='Solid foundations with clear gaps to close. Prime for the Suite.';
+    else v.textContent='Growth is still improvised. This is exactly where we start.';
+  }
+})();
+</script>
+</body>
+</html>

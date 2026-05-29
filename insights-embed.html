@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5" />
+<title>Insights | Vee Group</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;1,6..96,500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+:root{--navy:#16294F;--navy-deep:#0E1C3A;--cream:#FBF3E2;--cream-deep:#F2E6CC;--cream-card:#FFFAF0;--putty:#ECE8D4;--line:#16294F22;--line-on-navy:#FBF3E233;--display:"Bodoni Moda","Didot","Times New Roman",serif;--body:"Cormorant Garamond","Georgia",serif;--ui:"Jost",-apple-system,system-ui,sans-serif;--pad:26px;--maxw:460px;--ease:cubic-bezier(.22,.61,.36,1);}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}html,body{margin:0;padding:0;}
+body{background:var(--navy);color:var(--navy);font-family:var(--body);font-size:18px;line-height:1.5;-webkit-font-smoothing:antialiased;}
+img{max-width:100%;display:block;}a{color:inherit;text-decoration:none;}
+.app{max-width:var(--maxw);margin:0 auto;min-height:100vh;background:var(--cream);position:relative;overflow-x:clip;box-shadow:0 0 80px #00000040;}
+.eyebrow{font-family:var(--ui);font-size:11px;font-weight:500;letter-spacing:.32em;text-transform:uppercase;display:inline-flex;align-items:center;gap:10px;color:var(--navy);opacity:.75;}
+.eyebrow::before{content:"";width:24px;height:1px;background:currentColor;display:inline-block;}
+h1,h2{font-family:var(--display);font-weight:500;margin:0;letter-spacing:-.01em;}
+.display{font-family:var(--display);font-weight:500;line-height:1.04;}
+p{margin:0 0 1em;}
+.topbar{position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;height:62px;padding:0 var(--pad);background:color-mix(in oklab,var(--cream) 86%,transparent);backdrop-filter:saturate(140%) blur(12px);-webkit-backdrop-filter:saturate(140%) blur(12px);border-bottom:1px solid var(--line);}
+.topbar .wordmark{font-family:var(--display);font-weight:600;font-size:19px;letter-spacing:.05em;color:var(--navy);white-space:nowrap;}
+.menu-btn{border:none;background:none;padding:8px;margin:-8px -8px -8px 0;display:flex;flex-direction:column;gap:5px;cursor:pointer;}
+.menu-btn span{width:24px;height:1.6px;background:var(--navy);display:block;}
+.nav-overlay{position:fixed;inset:0;z-index:80;background:#0E1C3A00;pointer-events:none;transition:background .4s;}
+.nav-overlay.open{background:#0E1C3A55;pointer-events:auto;}
+.nav-panel{position:fixed;top:0;right:0;z-index:90;width:min(86vw,400px);height:100%;background:var(--navy);color:var(--cream);transform:translateX(100%);transition:transform .46s var(--ease);display:flex;flex-direction:column;padding:26px var(--pad) 32px;overflow-y:auto;}
+.nav-panel.open{transform:translateX(0);}
+.nav-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:34px;}
+.nav-head .wordmark{font-family:var(--display);font-weight:600;font-size:20px;color:var(--cream);}
+.nav-close{border:none;background:none;color:var(--cream);font-family:var(--ui);font-size:11px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;padding:6px;}
+.nav-links{display:flex;flex-direction:column;}
+.nav-links a{font-family:var(--display);font-size:30px;font-weight:500;color:var(--cream);padding:13px 0;border-bottom:1px solid var(--line-on-navy);display:flex;align-items:baseline;justify-content:space-between;opacity:0;transform:translateY(12px);}
+.nav-panel.open .nav-links a{animation:navIn .5s var(--ease) forwards;}
+.nav-links a .idx{font-family:var(--ui);font-size:11px;letter-spacing:.15em;opacity:.5;}
+.nav-links a[aria-current="page"]{color:var(--putty);font-style:italic;}
+@keyframes navIn{to{opacity:1;transform:none;}}
+.nav-foot{margin-top:auto;padding-top:28px;}
+.nav-foot .socials{display:flex;gap:18px;margin-bottom:16px;}
+.nav-foot .socials a{font-family:var(--ui);font-size:11px;letter-spacing:.15em;text-transform:uppercase;opacity:.7;}
+.nav-foot .contact{font-family:var(--ui);font-size:12px;opacity:.6;line-height:1.9;}
+.link-arrow{font-family:var(--ui);font-size:12px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;display:inline-flex;align-items:center;gap:9px;padding-bottom:3px;border-bottom:1px solid currentColor;}
+.link-arrow .arr{transition:transform .25s var(--ease);}
+.link-arrow:hover .arr{transform:translateX(4px);}
+section{padding:64px var(--pad);}
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .9s var(--ease),transform .9s var(--ease);}
+.reveal.in{opacity:1;transform:none;}
+.reveal.d1{transition-delay:.08s;}
+.site-foot{background:var(--navy-deep);color:var(--cream);padding:52px var(--pad) 120px;}
+.site-foot .fmark{font-family:var(--display);font-weight:600;font-size:30px;margin-bottom:6px;}
+.site-foot .ftag{font-family:var(--body);font-style:italic;font-size:19px;opacity:.8;margin-bottom:30px;}
+.site-foot .fnav{display:grid;grid-template-columns:1fr 1fr;gap:11px 16px;margin-bottom:30px;}
+.site-foot .fnav a{font-family:var(--ui);font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.75;}
+.site-foot .fline{height:1px;background:var(--line-on-navy);margin:8px 0 22px;}
+.site-foot .fcontact{font-family:var(--ui);font-size:12px;line-height:2;opacity:.7;}
+.site-foot .fsoc{display:flex;gap:16px;margin-top:18px;}
+.site-foot .fsoc a{font-family:var(--ui);font-size:11px;letter-spacing:.14em;text-transform:uppercase;opacity:.7;}
+.site-foot .fcopy{font-family:var(--ui);font-size:10px;letter-spacing:.1em;text-transform:uppercase;opacity:.4;margin-top:26px;}
+.cta-bar{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:100%;max-width:var(--maxw);z-index:55;display:flex;gap:1px;transition:transform .4s var(--ease);}
+.cta-bar.hidden{transform:translate(-50%,110%);}
+.cta-bar a{flex:1;text-align:center;font-family:var(--ui);font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;padding:16px 8px;background:var(--navy);color:var(--cream);}
+.cta-bar a.alt{background:var(--cream);color:var(--navy);}
+.imgwrap{overflow:hidden;background:var(--cream-deep);}
+.imgwrap.duo img{filter:grayscale(.3) contrast(1.02);mix-blend-mode:multiply;}
+/* Page-specific */
+.page-hero{padding:48px var(--pad) 8px;}
+.page-hero .big{font-size:48px;line-height:1.02;margin:18px 0 20px;}
+.feed{padding:24px 0 8px;}
+.post{display:block;padding:0 var(--pad);margin-bottom:38px;}
+.post .imgwrap{aspect-ratio:16/10;margin-bottom:16px;}
+.post .meta{font-family:var(--ui);font-size:10px;letter-spacing:.18em;text-transform:uppercase;opacity:.55;display:flex;gap:12px;}
+.post h2{font-size:25px;line-height:1.16;margin:10px 0 8px;}
+.post p{font-size:16px;line-height:1.45;opacity:.85;margin:0;}
+.feature{background:var(--navy);color:var(--cream);padding:36px var(--pad) 40px;margin-bottom:10px;}
+.feature .eyebrow{color:var(--cream);opacity:.7;}
+.feature .imgwrap{aspect-ratio:16/10;margin:18px 0 18px;}
+.feature h2{font-size:32px;line-height:1.1;margin:0 0 12px;}
+.feature p{font-size:17px;opacity:.85;margin:0 0 18px;}
+.subscribe{background:var(--cream-deep);padding:46px var(--pad);}
+.subscribe h2{font-size:30px;line-height:1.12;margin:10px 0 14px;}
+.sub-form{display:flex;gap:1px;border:1px solid var(--navy);margin-top:18px;}
+.sub-form input{flex:1;border:none;background:transparent;padding:15px;font-family:var(--ui);font-size:13px;letter-spacing:.04em;color:var(--navy);}
+.sub-form input::placeholder{color:var(--navy);opacity:.5;}
+.sub-form button{border:none;background:var(--navy);color:var(--cream);font-family:var(--ui);font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding:0 20px;cursor:pointer;}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <a href="https://www.veegrp.com" class="wordmark">VEE GROUP</a>
+    <button class="menu-btn" aria-label="Open menu"><span></span><span></span><span></span></button>
+  </header>
+  <div class="nav-overlay"></div>
+  <nav class="nav-panel" aria-label="Main">
+    <div class="nav-head"><span class="wordmark">VEE GROUP</span><button class="nav-close">Close ✕</button></div>
+    <div class="nav-links">
+      <a href="https://www.veegrp.com">Home <span class="idx">01</span></a>
+      <a href="https://www.veegrp.com/about">About us <span class="idx">02</span></a>
+      <a href="https://www.veegrp.com/services">Services <span class="idx">03</span></a>
+      <a href="https://www.veegrp.com/growth-intelligence-suite">Growth Intelligence <span class="idx">04</span></a>
+      <a href="https://www.veegrp.com/fellowship">Fellowship <span class="idx">05</span></a>
+      <a href="https://www.veegrp.com/blog" aria-current="page">Insights <span class="idx">06</span></a>
+      <a href="https://www.veegrp.com/contact">Contact <span class="idx">07</span></a>
+    </div>
+    <div class="nav-foot">
+      <div class="socials"><a href="https://www.linkedin.com/company/veegroup/" target="_blank" rel="noopener">LinkedIn</a><a href="https://www.instagram.com/veegrp/" target="_blank" rel="noopener">Instagram</a><a href="https://x.com/VeeGrp" target="_blank" rel="noopener">X</a></div>
+      <div class="contact">info@veegroup.in · +91 85959 99212<br />New Delhi · United Kingdom</div>
+    </div>
+  </nav>
+
+  <section class="page-hero">
+    <span class="eyebrow">Our Insights</span>
+    <h1 class="display big">Notes on behaviour &amp; growth.</h1>
+  </section>
+
+  <article class="feature">
+    <span class="eyebrow">Featured</span>
+    <div class="imgwrap duo"><img src="https://static.wixstatic.com/media/299bc5_90cc924170ad4cc98d9a53d5c171a6fcf000.jpg/v1/fill/w_700,h_438,fp_0.5_0.5,q_90,enc_auto/feat.jpg" alt="" onerror="this.parentNode.style.minHeight='200px'" /></div>
+    <h2 class="display">Leadership decisions are rarely irrational. They're psychologically efficient.</h2>
+    <p>Why the choices that look like gut instinct are often the brain doing exactly what it was built to do — and what that means for how you sell to leaders.</p>
+    <a href="https://www.veegrp.com/blog" target="_blank" rel="noopener" class="link-arrow" style="color:var(--cream);">Read on the blog <span class="arr">→</span></a>
+  </article>
+
+  <div class="feed">
+    <a class="post reveal" href="https://www.veegrp.com/blog" target="_blank" rel="noopener">
+      <div class="imgwrap duo"><img src="https://static.wixstatic.com/media/299bc5_8c0654cddd5846bbb4150ae54bbffa12~mv2.png/v1/fill/w_700,h_438,fp_0.5_0.5,q_90,enc_auto/p1.png" alt="" onerror="this.parentNode.style.minHeight='180px'" /></div>
+      <div class="meta"><span>Leadership</span><span>5 min read</span></div>
+      <h2 class="display">Online Leadership Coaching for Market Leadership</h2>
+      <p>What it takes to lead a category — and how coaching compresses the learning curve.</p>
+    </a>
+    <a class="post reveal" href="https://www.veegrp.com/blog" target="_blank" rel="noopener">
+      <div class="imgwrap duo"><img src="https://static.wixstatic.com/media/299bc5_86aedb0eaeab48f8bff5d49568257971~mv2.png/v1/fill/w_700,h_438,fp_0.5_0.5,q_90,enc_auto/p2.png" alt="" onerror="this.parentNode.style.minHeight='180px'" /></div>
+      <div class="meta"><span>Conviction</span><span>4 min read</span></div>
+      <h2 class="display">Learning from Leaders. Validating Direction. Strengthening Conviction.</h2>
+      <p>How the best operators turn external signal into internal certainty.</p>
+    </a>
+    <a class="post reveal" href="https://www.veegrp.com/blog" target="_blank" rel="noopener">
+      <div class="imgwrap duo"><img src="https://static.wixstatic.com/media/299bc5_93d07afbe43f4a9bbbe1cadc9e3d0190f000.jpg/v1/fill/w_700,h_438,fp_0.5_0.5,q_90,enc_auto/p3.jpg" alt="" onerror="this.parentNode.style.minHeight='180px'" /></div>
+      <div class="meta"><span>Behavioural Science</span><span>6 min read</span></div>
+      <h2 class="display">Markets don't buy products. They buy clarity, trust &amp; conviction.</h2>
+      <p>The behavioural foundations of every growth system we build.</p>
+    </a>
+  </div>
+
+  <section class="subscribe">
+    <span class="eyebrow reveal">Stay Close</span>
+    <h2 class="display reveal d1">Get our notes on behaviour &amp; growth.</h2>
+    <p class="reveal d1" style="font-size:16px;opacity:.85;margin:0;">Occasional, considered, never noise.</p>
+    <form class="sub-form reveal d1" onsubmit="this.querySelector('input').value='';this.querySelector('button').textContent='Done ✓';return false;">
+      <input type="email" placeholder="Your email" required />
+      <button type="submit">Subscribe</button>
+    </form>
+  </section>
+
+  <footer class="site-foot">
+    <div class="fmark">VEE GROUP</div><div class="ftag">Built on human behaviour.</div>
+    <div class="fnav"><a href="https://www.veegrp.com/about">About us</a><a href="https://www.veegrp.com/services">Services</a><a href="https://www.veegrp.com/growth-intelligence-suite">Growth Intelligence</a><a href="https://www.veegrp.com/fellowship">Fellowship</a><a href="https://www.veegrp.com/blog">Insights</a><a href="https://www.veegrp.com/contact">Contact</a></div>
+    <div class="fline"></div>
+    <div class="fcontact">info@veegroup.in<br />+91 85959 99212<br />New Delhi, India · United Kingdom</div>
+    <div class="fsoc"><a href="https://www.linkedin.com/company/veegroup/" target="_blank" rel="noopener">LinkedIn</a><a href="https://www.instagram.com/veegrp/" target="_blank" rel="noopener">Instagram</a><a href="https://x.com/VeeGrp" target="_blank" rel="noopener">X</a></div>
+    <div class="fcopy">© 2026 Vee Group · New Delhi · United Kingdom</div>
+  </footer>
+  <div class="cta-bar"><a href="https://www.veegrp.com/contact">Start a Project</a><a class="alt" href="https://wa.me/919212079212" target="_blank" rel="noopener">WhatsApp</a></div>
+</div>
+<script>
+(function(){
+  function bindMenu(){var btn=document.querySelector('.menu-btn'),panel=document.querySelector('.nav-panel'),overlay=document.querySelector('.nav-overlay'),close=document.querySelector('.nav-close');if(!btn||!panel)return;var links=panel.querySelectorAll('.nav-links a');function open(){panel.classList.add('open');overlay.classList.add('open');document.body.style.overflow='hidden';links.forEach(function(l,i){l.style.animationDelay=(0.06*i+0.08)+'s';});}function shut(){panel.classList.remove('open');overlay.classList.remove('open');document.body.style.overflow='';}btn.addEventListener('click',open);if(close)close.addEventListener('click',shut);if(overlay)overlay.addEventListener('click',shut);}
+  function bindReveal(){var els=document.querySelectorAll('.reveal');if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in');});return;}var io=new IntersectionObserver(function(ents){ents.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}});},{threshold:.14,rootMargin:'0px 0px -8% 0px'});els.forEach(function(e){io.observe(e);});}
+  function bindCta(){var bar=document.querySelector('.cta-bar'),foot=document.querySelector('.site-foot');if(!bar||!foot)return;var io=new IntersectionObserver(function(ents){ents.forEach(function(en){bar.classList.toggle('hidden',en.isIntersecting);});},{threshold:.05});io.observe(foot);}
+  function init(){bindMenu();bindReveal();bindCta();}
+  if(document.readyState!=='loading')init();else document.addEventListener('DOMContentLoaded',init);
+})();
+</script>
+</body>
+</html>

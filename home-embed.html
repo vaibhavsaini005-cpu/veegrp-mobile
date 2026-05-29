@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5" />
+<title>Vee Group | Built on Human Behaviour.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;1,6..96,500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --navy:#16294F; --navy-deep:#0E1C3A; --navy-soft:#2C3F66;
+  --cream:#FBF3E2; --cream-deep:#F2E6CC; --cream-card:#FFFAF0; --putty:#ECE8D4;
+  --line:#16294F22; --line-on-navy:#FBF3E233;
+  --display:"Bodoni Moda","Didot","Times New Roman",serif;
+  --body:"Cormorant Garamond","Georgia",serif;
+  --ui:"Jost",-apple-system,system-ui,sans-serif;
+  --pad:26px; --maxw:460px; --ease:cubic-bezier(.22,.61,.36,1);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--navy);color:var(--navy);font-family:var(--body);font-size:18px;line-height:1.5;-webkit-font-smoothing:antialiased;}
+img{max-width:100%;display:block;}
+a{color:inherit;text-decoration:none;}
+.app{max-width:var(--maxw);margin:0 auto;min-height:100vh;background:var(--cream);position:relative;overflow-x:clip;box-shadow:0 0 80px #00000040;}
+.eyebrow{font-family:var(--ui);font-size:11px;font-weight:500;letter-spacing:.32em;text-transform:uppercase;display:inline-flex;align-items:center;gap:10px;color:var(--navy);opacity:.75;}
+.eyebrow::before{content:"";width:24px;height:1px;background:currentColor;display:inline-block;}
+h1,h2,h3,h4{font-family:var(--display);font-weight:500;margin:0;letter-spacing:-.01em;}
+.display{font-family:var(--display);font-weight:500;line-height:1.04;letter-spacing:-.015em;}
+p{margin:0 0 1em;}
+.lead{font-size:21px;line-height:1.45;}
+.topbar{position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;height:62px;padding:0 var(--pad);background:color-mix(in oklab,var(--cream) 86%,transparent);backdrop-filter:saturate(140%) blur(12px);-webkit-backdrop-filter:saturate(140%) blur(12px);border-bottom:1px solid var(--line);transition:background .3s;}
+.topbar .wordmark{font-family:var(--display);font-weight:600;font-size:19px;letter-spacing:.05em;color:var(--navy);white-space:nowrap;}
+.menu-btn{border:none;background:none;padding:8px;margin:-8px -8px -8px 0;display:flex;flex-direction:column;gap:5px;cursor:pointer;}
+.menu-btn span{width:24px;height:1.6px;background:var(--navy);display:block;transition:.3s var(--ease);}
+.nav-overlay{position:fixed;inset:0;z-index:80;background:#0E1C3A00;pointer-events:none;transition:background .4s;}
+.nav-overlay.open{background:#0E1C3A55;pointer-events:auto;}
+.nav-panel{position:fixed;top:0;right:0;z-index:90;width:min(86vw,400px);height:100%;background:var(--navy);color:var(--cream);transform:translateX(100%);transition:transform .46s var(--ease);display:flex;flex-direction:column;padding:26px var(--pad) 32px;overflow-y:auto;}
+.nav-panel.open{transform:translateX(0);}
+.nav-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:34px;}
+.nav-head .wordmark{font-family:var(--display);font-weight:600;font-size:20px;letter-spacing:.04em;color:var(--cream);}
+.nav-close{border:none;background:none;color:var(--cream);font-family:var(--ui);font-size:11px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;padding:6px;}
+.nav-links{display:flex;flex-direction:column;}
+.nav-links a{font-family:var(--display);font-size:30px;font-weight:500;color:var(--cream);padding:13px 0;border-bottom:1px solid var(--line-on-navy);display:flex;align-items:baseline;justify-content:space-between;opacity:0;transform:translateY(12px);}
+.nav-panel.open .nav-links a{animation:navIn .5s var(--ease) forwards;}
+.nav-links a .idx{font-family:var(--ui);font-size:11px;letter-spacing:.15em;opacity:.5;}
+.nav-links a[aria-current="page"]{color:var(--putty);font-style:italic;}
+@keyframes navIn{to{opacity:1;transform:none;}}
+.nav-foot{margin-top:auto;padding-top:28px;}
+.nav-foot .socials{display:flex;gap:18px;margin-bottom:16px;}
+.nav-foot .socials a{font-family:var(--ui);font-size:11px;letter-spacing:.15em;text-transform:uppercase;opacity:.7;}
+.nav-foot .contact{font-family:var(--ui);font-size:12px;letter-spacing:.04em;opacity:.6;line-height:1.9;}
+.btn{font-family:var(--ui);font-size:12px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;display:inline-flex;align-items:center;gap:10px;padding:15px 26px;cursor:pointer;border:none;transition:.25s var(--ease);}
+.btn-solid{background:var(--navy);color:var(--cream);}
+.btn-solid:hover{background:var(--navy-deep);}
+.btn-solid.on-navy{background:var(--cream);color:var(--navy);}
+.btn .arr{transition:transform .25s var(--ease);}
+.btn:hover .arr{transform:translateX(4px);}
+.link-arrow{font-family:var(--ui);font-size:12px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;display:inline-flex;align-items:center;gap:9px;padding-bottom:3px;border-bottom:1px solid currentColor;}
+.link-arrow .arr{transition:transform .25s var(--ease);}
+.link-arrow:hover .arr{transform:translateX(4px);}
+section{padding:64px var(--pad);position:relative;}
+.sec-navy{background:var(--navy);color:var(--cream);}
+.sec-navy .eyebrow{color:var(--cream);opacity:.7;}
+.sec-cream-deep{background:var(--cream-deep);}
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .9s var(--ease),transform .9s var(--ease);}
+.reveal.in{opacity:1;transform:none;}
+.reveal.d1{transition-delay:.08s;}
+.reveal.d2{transition-delay:.16s;}
+.site-foot{background:var(--navy-deep);color:var(--cream);padding:52px var(--pad) 120px;}
+.site-foot .fmark{font-family:var(--display);font-weight:600;font-size:30px;letter-spacing:.04em;margin-bottom:6px;}
+.site-foot .ftag{font-family:var(--body);font-style:italic;font-size:19px;opacity:.8;margin-bottom:30px;}
+.site-foot .fnav{display:grid;grid-template-columns:1fr 1fr;gap:11px 16px;margin-bottom:30px;}
+.site-foot .fnav a{font-family:var(--ui);font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.75;}
+.site-foot .fline{height:1px;background:var(--line-on-navy);margin:8px 0 22px;}
+.site-foot .fcontact{font-family:var(--ui);font-size:12px;letter-spacing:.05em;line-height:2;opacity:.7;}
+.site-foot .fsoc{display:flex;gap:16px;margin-top:18px;}
+.site-foot .fsoc a{font-family:var(--ui);font-size:11px;letter-spacing:.14em;text-transform:uppercase;opacity:.7;}
+.site-foot .fcopy{font-family:var(--ui);font-size:10px;letter-spacing:.1em;text-transform:uppercase;opacity:.4;margin-top:26px;}
+.cta-bar{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:100%;max-width:var(--maxw);z-index:55;display:flex;gap:1px;background:var(--line-on-navy);transition:transform .4s var(--ease);}
+.cta-bar.hidden{transform:translate(-50%,110%);}
+.cta-bar a{flex:1;text-align:center;font-family:var(--ui);font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;padding:16px 8px;background:var(--navy);color:var(--cream);}
+.cta-bar a.alt{background:var(--cream);color:var(--navy);}
+.imgwrap{overflow:hidden;background:var(--cream-deep);position:relative;}
+.imgwrap.duo img{filter:grayscale(.3) contrast(1.02);mix-blend-mode:multiply;}
+
+/* Page-specific */
+.hero-a{padding:54px var(--pad) 60px;}
+.hero-a .stmt{font-size:18px;line-height:1.45;margin:26px 0 30px;max-width:34ch;}
+.hero-a .big{font-size:44px;line-height:1.05;margin-bottom:30px;}
+.hero-a .big em{font-style:italic;}
+.hero-a .promise{font-family:var(--body);font-style:italic;font-size:20px;line-height:1.35;color:var(--navy);border-left:2px solid var(--navy);padding-left:18px;margin:0 0 32px;opacity:.92;}
+.who .imgwrap{aspect-ratio:4/4.4;margin-bottom:26px;}
+.who h2{font-size:34px;line-height:1.08;margin:6px 0 18px;}
+.who p{font-size:18px;line-height:1.5;}
+.pillars{display:flex;flex-direction:column;gap:0;}
+.pillar{padding:22px 0;border-top:1px solid var(--line-on-navy);}
+.pillar:last-child{border-bottom:1px solid var(--line-on-navy);}
+.pillar .pn{font-family:var(--ui);font-size:11px;letter-spacing:.2em;opacity:.5;}
+.pillar h3{font-size:25px;margin:8px 0 8px;}
+.pillar p{font-size:16px;opacity:.82;margin:0;}
+.insights h2{font-size:34px;margin-bottom:6px;}
+.ins-card{margin-top:30px;}
+.ins-card .imgwrap{aspect-ratio:3/2;margin-bottom:14px;}
+.ins-card .tag{font-family:var(--ui);font-size:10px;letter-spacing:.2em;text-transform:uppercase;opacity:.55;}
+.ins-card h3{font-size:22px;line-height:1.18;margin:8px 0 0;}
+.closer{text-align:left;}
+.closer .big{font-size:38px;line-height:1.08;margin:14px 0 28px;}
+.closer .big em{font-style:italic;}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <a href="https://www.veegrp.com" class="wordmark">VEE GROUP</a>
+    <button class="menu-btn" aria-label="Open menu"><span></span><span></span><span></span></button>
+  </header>
+  <div class="nav-overlay"></div>
+  <nav class="nav-panel" aria-label="Main">
+    <div class="nav-head"><span class="wordmark">VEE GROUP</span><button class="nav-close">Close ✕</button></div>
+    <div class="nav-links">
+      <a href="https://www.veegrp.com" aria-current="page">Home <span class="idx">01</span></a>
+      <a href="https://www.veegrp.com/about">About us <span class="idx">02</span></a>
+      <a href="https://www.veegrp.com/services">Services <span class="idx">03</span></a>
+      <a href="https://www.veegrp.com/growth-intelligence-suite">Growth Intelligence <span class="idx">04</span></a>
+      <a href="https://www.veegrp.com/fellowship">Fellowship <span class="idx">05</span></a>
+      <a href="https://www.veegrp.com/blog">Insights <span class="idx">06</span></a>
+      <a href="https://www.veegrp.com/contact">Contact <span class="idx">07</span></a>
+    </div>
+    <div class="nav-foot">
+      <div class="socials"><a href="https://www.linkedin.com/company/veegroup/" target="_blank" rel="noopener">LinkedIn</a><a href="https://www.instagram.com/veegrp/" target="_blank" rel="noopener">Instagram</a><a href="https://x.com/VeeGrp" target="_blank" rel="noopener">X</a></div>
+      <div class="contact">info@veegroup.in · +91 85959 99212<br />New Delhi · United Kingdom</div>
+    </div>
+  </nav>
+
+  <!-- Hero A — Editorial Cream -->
+  <section class="hero-a">
+    <span class="eyebrow">Built on Human Behaviour</span>
+    <p class="stmt">We engineer growth using behavioural science — because markets don't buy products. They buy clarity, trust, and conviction.</p>
+    <h1 class="display big">Growth, <em>engineered</em> — not advised.</h1>
+    <p class="promise">"Every company we work with will have a clearer market position, a measurable revenue system, and a credible brand presence within 90 days."</p>
+    <a href="https://www.veegrp.com/contact" class="btn btn-solid">Start a Project <span class="arr">→</span></a>
+  </section>
+
+  <!-- Who we are -->
+  <section class="who sec-cream-deep">
+    <div class="imgwrap duo reveal"><img src="https://static.wixstatic.com/media/299bc5_93d07afbe43f4a9bbbe1cadc9e3d0190f000.jpg" alt="Vee Group" onerror="this.parentNode.style.minHeight='320px'" /></div>
+    <span class="eyebrow reveal">Who We Are</span>
+    <h2 class="display reveal d1">A Business Growth Engineering firm.</h2>
+    <p class="reveal d1">We engineer growth by understanding how markets think and how decisions are shaped. Our work draws from behavioural science — using cognitive patterns and perception triggers to influence clarity, trust, and action.</p>
+    <p class="reveal d2">Execution is built through a research-led, brain-first approach: designing, testing, and refining growth systems that align strategy, execution, and physical brand assets for measurable, enduring outcomes.</p>
+    <p class="reveal d2"><a href="https://www.veegrp.com/about" class="link-arrow">Explore More <span class="arr">→</span></a></p>
+  </section>
+
+  <!-- Foundation pillars -->
+  <section class="sec-navy">
+    <span class="eyebrow reveal">The Foundation</span>
+    <h2 class="display reveal d1" style="font-size:32px;line-height:1.1;margin:10px 0 8px;">Growth is not creative chaos. It is the outcome of well-aligned systems.</h2>
+    <div class="pillars" style="margin-top:30px;">
+      <div class="pillar reveal"><div class="pn">01 — DESIGN</div><h3>Systems, not tactics</h3><p>We replace fragmented marketing with structured, measurable scale.</p></div>
+      <div class="pillar reveal d1"><div class="pn">02 — BUILD</div><h3>Brain-first execution</h3><p>Go-to-market and revenue systems grounded in behavioural science.</p></div>
+      <div class="pillar reveal d2"><div class="pn">03 — MEASURE</div><h3>Designed performance</h3><p>From trial-and-error growth to outcomes you can predict.</p></div>
+    </div>
+    <p style="margin:34px 0 0;"><a href="https://www.veegrp.com/services" class="link-arrow" style="color:var(--cream);">View our services <span class="arr">→</span></a></p>
+  </section>
+
+  <!-- Insights -->
+  <section class="insights">
+    <span class="eyebrow reveal">Our Insights</span>
+    <h2 class="display reveal d1">Notes on behaviour &amp; growth.</h2>
+    <a class="ins-card reveal d1" href="https://www.veegrp.com/blog">
+      <div class="imgwrap"><img src="https://static.wixstatic.com/media/299bc5_8c0654cddd5846bbb4150ae54bbffa12~mv2.png/v1/fill/w_500,h_334,fp_0.5_0.5,q_90,enc_auto/299bc5_8c0654cddd5846bbb4150ae54bbffa12~mv2.png" alt="" onerror="this.parentNode.style.minHeight='180px'" /></div>
+      <span class="tag">Leadership</span>
+      <h3>Online Leadership Coaching for Market Leadership</h3>
+    </a>
+    <a class="ins-card reveal d2" href="https://www.veegrp.com/blog">
+      <div class="imgwrap"><img src="https://static.wixstatic.com/media/299bc5_90cc924170ad4cc98d9a53d5c171a6fcf000.jpg/v1/fill/w_500,h_334,fp_0.5_0.5,q_90,enc_auto/299bc5_90cc924170ad4cc98d9a53d5c171a6fcf000.jpg" alt="" onerror="this.parentNode.style.minHeight='180px'" /></div>
+      <span class="tag">Behavioural Science</span>
+      <h3>Leadership decisions are rarely irrational. They're psychologically efficient.</h3>
+    </a>
+    <p style="margin-top:30px;"><a href="https://www.veegrp.com/blog" class="link-arrow">All insights <span class="arr">→</span></a></p>
+  </section>
+
+  <!-- Closer -->
+  <section class="closer sec-cream-deep">
+    <span class="eyebrow reveal">A Selective Practice</span>
+    <h2 class="display big reveal d1">We embed inside a select circle of <em>founder-led</em> businesses.</h2>
+    <a href="https://www.veegrp.com/contact" class="btn btn-solid reveal d1">Start a Project <span class="arr">→</span></a>
+  </section>
+
+  <footer class="site-foot">
+    <div class="fmark">VEE GROUP</div>
+    <div class="ftag">Built on human behaviour.</div>
+    <div class="fnav">
+      <a href="https://www.veegrp.com/about">About us</a><a href="https://www.veegrp.com/services">Services</a>
+      <a href="https://www.veegrp.com/growth-intelligence-suite">Growth Intelligence</a><a href="https://www.veegrp.com/fellowship">Fellowship</a>
+      <a href="https://www.veegrp.com/blog">Insights</a><a href="https://www.veegrp.com/contact">Contact</a>
+    </div>
+    <div class="fline"></div>
+    <div class="fcontact">info@veegroup.in<br />+91 85959 99212<br />New Delhi, India · United Kingdom</div>
+    <div class="fsoc">
+      <a href="https://www.linkedin.com/company/veegroup/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://www.instagram.com/veegrp/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://x.com/VeeGrp" target="_blank" rel="noopener">X</a>
+      <a href="https://www.facebook.com/profile.php?id=61587074399759" target="_blank" rel="noopener">Facebook</a>
+    </div>
+    <div class="fcopy">© 2026 Vee Group · New Delhi · United Kingdom</div>
+  </footer>
+  <div class="cta-bar">
+    <a href="https://www.veegrp.com/contact">Start a Project</a>
+    <a class="alt" href="https://wa.me/919212079212" target="_blank" rel="noopener">WhatsApp</a>
+  </div>
+</div>
+<script>
+(function(){
+  function bindMenu(){
+    var btn=document.querySelector('.menu-btn'),panel=document.querySelector('.nav-panel'),overlay=document.querySelector('.nav-overlay'),close=document.querySelector('.nav-close');
+    if(!btn||!panel)return;
+    var links=panel.querySelectorAll('.nav-links a');
+    function open(){panel.classList.add('open');overlay.classList.add('open');document.body.style.overflow='hidden';links.forEach(function(l,i){l.style.animationDelay=(0.06*i+0.08)+'s';});}
+    function shut(){panel.classList.remove('open');overlay.classList.remove('open');document.body.style.overflow='';}
+    btn.addEventListener('click',open);
+    if(close)close.addEventListener('click',shut);
+    if(overlay)overlay.addEventListener('click',shut);
+  }
+  function bindReveal(){
+    var els=document.querySelectorAll('.reveal');
+    if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in');});return;}
+    var io=new IntersectionObserver(function(ents){ents.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}});},{threshold:.14,rootMargin:'0px 0px -8% 0px'});
+    els.forEach(function(e){io.observe(e);});
+  }
+  function bindCta(){
+    var bar=document.querySelector('.cta-bar'),foot=document.querySelector('.site-foot');
+    if(!bar||!foot)return;
+    var io=new IntersectionObserver(function(ents){ents.forEach(function(en){bar.classList.toggle('hidden',en.isIntersecting);});},{threshold:.05});
+    io.observe(foot);
+  }
+  function init(){bindMenu();bindReveal();bindCta();}
+  if(document.readyState!=='loading')init();
+  else document.addEventListener('DOMContentLoaded',init);
+})();
+</script>
+</body>
+</html>
